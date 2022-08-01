@@ -13,6 +13,9 @@ class StoriesController extends Controller
     	$data['stories'] = DB::table('story_table')
     					->get();
 
+        $data['categories'] = DB::table('categories')
+                        ->get();
+
         Log::info("sending data : ");
         Log::info($data);
 
@@ -65,5 +68,27 @@ class StoriesController extends Controller
     	// select * from story_options join page_link on story_options.option_id = page_link.option_id where page_id = 'P105';
 
     	// select * from story_table st join pages p on st.story_id = p.story_id where st.story_id = 'S3' and p.page_no = '106';
+    }
+
+    // get categories
+    public function getCategories(Request $request){
+        $data['categories'] = DB::table('categories')
+                                ->where('is_story','1')
+                                ->get();
+
+        return $data;
+    }
+
+    // Search
+    public function search(Request $request){
+        $word = $request->searchWord;
+
+        $data['searchResults'] = DB::table('story_table')
+                                    ->where('title','like','%'.$word.'%')
+                                    ->get();
+
+                    
+
+        return $data;
     }
 }
