@@ -31,6 +31,8 @@ Route::group(['prefix' => 'trm', 'middleware' => ['CORS', 'auth:api']], function
     Route::post('/categories',[StoriesController::class, 'getCategories']);
 });
 
-Route::get('/stories',[StoriesController::class, 'getStories']);
-Route::get('/story',[StoriesController::class, 'getStory']);
-Route::post('/search',[StoriesController::class, 'search']);
+Route::group(['middleware'=>'CORS'], function($router){
+    Route::get('/stories',[StoriesController::class, 'getStories']);
+    Route::get('/story',[StoriesController::class, 'getStory']);
+    Route::post('/search',[StoriesController::class, 'search']);
+});
