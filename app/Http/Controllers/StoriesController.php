@@ -83,6 +83,9 @@ class StoriesController extends Controller
     public function search(Request $request){
         $word = $request->searchWord;
 
+        Log::info("searching : ");
+        Log::info($data);
+
         $data['searchResults'] = DB::table('story_table')
                                     ->where('title','like','%'.$word.'%')
                                     ->get();
